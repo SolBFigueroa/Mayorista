@@ -1,0 +1,41 @@
+from sqlalchemy import Column, Integer, String, Float, Boolean
+from sqlalchemy.orm import relationship
+from app.database import Base
+# La base de datos solo entiende lo que tiene Column
+# relationship → es solo para Python.
+# ForeignKey tiene el nombre de la TABLA.
+class producto(Base):
+    __tablename__ = "productos"
+    #atributos:
+    id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String, nullable = False)
+    stock = Column(Integer, default = 0)
+    stock_min = Column(Integer, default = 0)
+    precio_min = Column(Float,nullable=False)
+    precio_mayor = Column(Float,nullable=False)
+    categoria = Column(String,nullable=False)
+    codigo = Column(String, nullable=False, unique=True)
+    detalles_venta = relationship("detalleVenta", back_populates="producto")
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
