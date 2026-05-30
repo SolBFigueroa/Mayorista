@@ -18,7 +18,7 @@ class Usuario(Base):
     # segundo campo = cómo se llama el atributo en la otra clase que apunta de vuelta.
     # back_populates SIEMPRE tiene que ser el nombre de un relationship.
     # un vendedor -> tiene muchas ventas
-    ventas = relationship("venta", back_populates = "usuario")
+    ventas = relationship("Venta", back_populates = "usuario")
 
 
 

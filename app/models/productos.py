@@ -15,7 +15,7 @@ class Producto(Base):
     precio_mayor = Column(Float,nullable=False)
     categoria = Column(String,nullable=False)
     codigo = Column(String, nullable=False, unique=True)
-    detalles_venta = relationship("detalleVenta", back_populates="producto")
+    detalles_venta = relationship("DetalleVenta", back_populates="producto")
 
 
    
