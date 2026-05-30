@@ -11,7 +11,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 # 4. Create the Base class for models
 Base = declarative_base()
 
-def get_db(): # analogia: como una puerta a los datos de la pagina
+def get_db(): # abre y cierra la conexión a la base de datos
     db = SessionLocal()
     try:
         yield db
