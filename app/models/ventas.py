@@ -5,7 +5,7 @@ from app.database import Base
 # La base de datos solo entiende lo que tiene Column. Se guarda en la base de datos.
 # relationship → es solo para Python.
 # ForeignKey tiene el nombre de la TABLA.
-class venta (Base):
+class Venta (Base):
     __tablename__ = "ventas"
     #atributos:
     id = Column(Integer, primary_key=True, index=True)
@@ -16,7 +16,7 @@ class venta (Base):
     total = Column (Float, nullable = False, default = 0.0)
     detalles = relationship("detalleVenta", back_populates = "venta") #todos los productos de la venta
 
-class detalleVenta (Base):
+class DetalleVenta (Base):
     __tablename__ = "detalle_venta"
 
     id = Column(Integer, primary_key=True, index=True)

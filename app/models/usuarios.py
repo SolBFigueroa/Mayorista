@@ -4,7 +4,7 @@ from app.database import Base
 # La base de datos solo entiende lo que tiene Column
 # relationship → es solo para Python.
 # ForeignKey tiene el nombre de la TABLA.
-class usuario(Base):
+class Usuario(Base):
     __tablename__ = "usuarios"
     #atributos:
     id = Column(Integer, primary_key=True, index=True)
