@@ -7,9 +7,10 @@ from app.database import Base
 class Usuario(Base):
     __tablename__ = "usuarios"
     #atributos:
-    id = Column(Integer, primary_key=True, index=True)
-    nombre = Column(String, nullable=False) 
-    user_name = Column(String, nullable = False, unique = True)
+    id = Column(Integer, primary_key = True, index=True)
+    nombre = Column(String, nullable = False) 
+    apellido = Column(String, nullable = False) 
+    email = Column(String, nullable = False)
     contraseña = Column(String, nullable = False)
     activo = Column(Boolean, default = True) # es o ya no empleado
     rol = Column(String, nullable = False)

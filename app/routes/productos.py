@@ -12,7 +12,7 @@ def listar_productos(db: Session = Depends(get_db)):
 
 @router.get("/productos/buscar/nombre/{name}")
 def buscar_nombre_producto(name : str, db: Session = Depends(get_db)):
-    #all no devuelve None, si no encuentra nada devuelve lista vacia
+    #all no devuelve None si no encuentra nada, devuelve lista vacia
     nombre_db = db.query(Producto).filter(Producto.nombre.like(f"%{name}%")).all() 
     if not nombre_db: # lista vacia es false
         raise HTTPException(status_code=404, detail="Producto no encontrado")
