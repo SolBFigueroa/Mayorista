@@ -5,12 +5,12 @@ class UsuarioCrear(BaseModel):
     nombre: str
     apellido: str
     email: str
-    contraseña: str
+    password: str
     rol: str
 
-class CambiarContraseña(BaseModel):
-    contraseña_actual: str
-    contraseña_nueva: str
+class CambiarPassword(BaseModel):
+    password_actual: str
+    password_nueva: str
 
 
 

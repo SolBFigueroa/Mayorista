@@ -11,7 +11,7 @@ class Usuario(Base):
     nombre = Column(String, nullable = False) 
     apellido = Column(String, nullable = False) 
     email = Column(String, nullable = False)
-    contraseña = Column(String, nullable = False)
+    password = Column(String, nullable = False)
     activo = Column(Boolean, default = True) # es o ya no empleado
     rol = Column(String, nullable = False)
     # relationship (conexion entre tablas):
