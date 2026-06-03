@@ -11,11 +11,10 @@ class Producto(Base):
     nombre = Column(String, nullable = False)
     stock = Column(Integer, default = 0)
     stock_min = Column(Integer, default = 0)
-    precio_min = Column(Float,nullable=False)
-    precio_mayor = Column(Float,nullable=False)
+    precio = Column(Float,nullable=False)
     categoria = Column(String,nullable=False)
     codigo = Column(String, nullable=False, unique=True)
-    detalles_venta = relationship("DetalleVenta", back_populates="producto")
+    detalles_venta = relationship("DetalleVenta", back_populates="producto") # todos los DetalleVenta donde ese producto fue vendido
 
 
    
