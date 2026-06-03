@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Session
 from fastapi import Depends, APIRouter
+from fastapi import HTTPException
 from app.database import get_db
 from app.models.usuarios import Usuario
 from app.schemas.usuarios import UsuarioCrear, CambiarPassword
-from fastapi import HTTPException
 
 router = APIRouter()
 

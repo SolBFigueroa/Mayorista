@@ -14,9 +14,9 @@ class Venta (Base):
     usuario = relationship("Usuario", back_populates ="ventas") # una venta -> tiene un vendedor
     tipo_entrega = Column(String, nullable = True) # puede existir o no (venta en el local)
     total = Column (Float, nullable = False, default = 0.0)
-    detalles = relationship("DetalleVenta", back_populates = "venta") #todos los productos de la venta
+    detalles = relationship("DetalleVenta", back_populates = "venta") #todos los detalleVenta de esa venta
 
-class DetalleVenta (Base):
+class DetalleVenta (Base): # info de un producto en una venta
     __tablename__ = "detalle_venta"
 
     id = Column(Integer, primary_key=True, index=True)
