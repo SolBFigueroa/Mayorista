@@ -7,8 +7,7 @@ class ProductoCrear (BaseModel):
     categoria: str
     stock: int
     stock_min: int
-    precio_min: float
-    precio_mayor: float
+    precio :float
     codigo: str
 
 class ProductoActualizar (BaseModel):
@@ -17,8 +16,7 @@ class ProductoActualizar (BaseModel):
     categoria: Optional[str]= None
     stock: Optional[int]= None
     stock_min: Optional[int]= None
-    precio_min: Optional[float]= None
-    precio_mayor: Optional[float]= None
+    precio: Optional[float]= None
 
 
 
