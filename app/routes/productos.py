@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Session
-from fastapi import Depends, APIRouter
 from app.database import get_db
 from app.models.productos import Producto
 from app.schemas.productos import ProductoCrear, ProductoActualizar
 from fastapi import HTTPException
+from fastapi import Depends, APIRouter
 router = APIRouter()
 
 @router.get("/productos")
@@ -18,21 +18,21 @@ def buscar_nombre_producto(name : str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Producto no encontrado")
     return nombre_db
 
-@router.get("/productos/buscar/codigo/{codigo}")
+@router.get("/productos/buscar/codigo/{code}")
 def buscar_codigo_producto(code: str, db: Session = Depends(get_db)):
     codigo_db = db.query(Producto).filter(Producto.codigo == code).first()
     if not codigo_db: # lista vacia es false
         raise HTTPException(status_code=404, detail="Producto no encontrado")
     return codigo_db
     
-@router.post("/productos")
+@router.post("/productos/crear")
 def crear_producto(producto: ProductoCrear, db: Session = Depends(get_db)):
-    nuevo_producto = Producto(nombre = producto.nombre, categoria = producto.categoria, stock = producto.stock, stock_min = producto.stock_min,precio_min = producto.precio_min, precio_mayor = producto.precio_mayor, codigo = producto.codigo)
+    nuevo_producto = Producto(nombre = producto.nombre, categoria = producto.categoria, stock = producto.stock, stock_min = producto.stock_min, precio = producto.precio, codigo = producto.codigo)
     db.add(nuevo_producto) # porque no existía en la base de datos
     db.commit() # guardo
     return nuevo_producto
 
-@router.put("/productos/{id}")
+@router.put("/productos/actualizar/{id}")
 def actualizar_producto(id: int, producto: ProductoActualizar, db: Session = Depends(get_db)):
     producto_db = db.query(Producto).filter(Producto.id == id).first() # trae el objeto con ese id
     if producto_db is None:
@@ -44,7 +44,7 @@ def actualizar_producto(id: int, producto: ProductoActualizar, db: Session = Dep
     db.commit() # guardo
     return producto_db
 
-@router.delete("/productos/{id}")
+@router.delete("/productos/eliminar/{id}")
 def eliminar_producto(id: int, db: Session = Depends(get_db)):
     producto_db = db.query(Producto).filter(Producto.id == id).first() # trae el objeto con ese id
     if producto_db is None:
