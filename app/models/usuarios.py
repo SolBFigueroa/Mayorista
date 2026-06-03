@@ -10,7 +10,7 @@ class Usuario(Base):
     id = Column(Integer, primary_key = True, index=True)
     nombre = Column(String, nullable = False) 
     apellido = Column(String, nullable = False) 
-    email = Column(String, nullable = False)
+    email = Column(String, nullable = False, unique = True)
     password = Column(String, nullable = False)
     activo = Column(Boolean, default = True) # es o ya no empleado
     rol = Column(String, nullable = False)
