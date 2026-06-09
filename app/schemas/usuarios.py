@@ -9,15 +9,20 @@ class UsuarioCrear(BaseModel):
     rol: str
 
 class CambiarPassword(BaseModel):
-    password_actual: str
-    password_nueva: str
+    actual: str
+    nueva: str
 
+class UsuarioLogin(BaseModel):
+    email : str
+    password : str
 
-
-
-
-
-
+class UsuarioRespuesta(BaseModel):
+    id: int
+    nombre: str
+    apellido: str
+    email: str
+    activo:bool
+    rol: str
 
 
 
