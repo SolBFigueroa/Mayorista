@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import Depends, APIRouter
 from fastapi import HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
 from app.database import get_db
 from app.models.usuarios import Usuario
 from app.schemas.usuarios import UsuarioCrear, CambiarPassword, UsuarioRespuesta, UsuarioLogin
@@ -14,9 +15,7 @@ def listar_usuarios(usuario: dict = Depends(obtener_usuario_actual),db: Session 
     return db.query(Usuario).all()
 
 @router.post("/usuarios", response_model  = UsuarioRespuesta)
-def crear_usuario(new_user: UsuarioCrear, usuario: dict = Depends(obtener_usuario_actual),db: Session = Depends(get_db)): #el admin crea usuarios.
-    if usuario["rol"] != "admin":
-        raise HTTPException(status_code=403, detail="No tenés permiso")
+def crear_usuario(new_user: UsuarioCrear,db: Session = Depends(get_db)): #el admin crea usuarios.
     usuario_db = db.query(Usuario).filter(Usuario.email == new_user.email).first()
     if usuario_db is not None:
         raise HTTPException(status_code=400, detail="Email ya existente")
@@ -45,7 +44,7 @@ def desactivar_usuario(id: int, usuario: dict = Depends(obtener_usuario_actual),
     return user_a_desactivar
 
 @router.get("/usuarios/{id}/ventas")
-def ventas_usuario(id: int, db: Session = Depends(get_db)):
+def ventas_usuario(id: int,usuario: dict = Depends(obtener_usuario_actual), db: Session = Depends(get_db)):
     usuario_db = db.query(Usuario).filter(Usuario.id == id).first()
     if usuario_db is None:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
@@ -65,16 +64,12 @@ def cambiar_password_usuario(id: int, passwords: CambiarPassword,usuario: dict =
        raise HTTPException(status_code=400, detail="password incorrecta") 
 
 @router.post("/usuarios/login")
-def verificar_usuario(usuario: UsuarioLogin, db: Session = Depends(get_db)):
-    usuario_db = db.query(Usuario).filter(Usuario.email == usuario.email).first()
+def verificar_usuario(form: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    usuario_db = db.query(Usuario).filter(Usuario.email == form.username).first()
     if usuario_db is None:
         raise HTTPException(status_code=401, detail="Email o contraseña incorrectos")
-    else:
-        if verificar_password(usuario.password,usuario_db.password):
-            if usuario_db.activo:
-                return {"token": crear_token({"id": usuario_db.id, "rol": usuario_db.rol})}
-            else:
-                raise HTTPException(status_code=403, detail="Usuario inactivo, contacte al administrador")
-        else:
-            raise HTTPException(status_code=401, detail="Email o contraseña incorrectos")
-
+    if not verificar_password(form.password, usuario_db.password):
+        raise HTTPException(status_code=401, detail="Email o contraseña incorrectos")
+    if not usuario_db.activo:
+        raise HTTPException(status_code=403, detail="Usuario inactivo, contacte al administrador")
+    return {"access_token": crear_token({"id": usuario_db.id, "rol": usuario_db.rol}), "token_type": "bearer"}
