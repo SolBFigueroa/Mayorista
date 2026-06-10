@@ -33,7 +33,7 @@ La idea central es que el admin tenga el menor trabajo operativo posible: aprueb
 - Buscar por nombre (búsqueda parcial)
 - Buscar por código de barras
 - Crear, actualizar y eliminar productos (solo admin)
-- Cada producto tiene precio minorista y mayorista, stock actual y stock mínimo configurado por producto
+- Cada producto tiene precio, stock actual y stock mínimo configurado por producto
 
 ### Ventas
 - Registrar ventas con descuento automático de stock al confirmar
